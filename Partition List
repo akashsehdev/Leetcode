@@ -1,0 +1,63 @@
+//Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+
+//You should preserve the original relative order of the nodes in each of the two partitions.
+
+/**
+Example 2:
+
+Input: head = [2,1], x = 2
+Output: [1,2]
+ 
+
+Constraints:
+
+The number of nodes in the list is in the range [0, 200].
+-100 <= Node.val <= 100
+-200 <= x <= 200
+
+**/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        //find x
+        //make a loop from x to end and find elements less than x 
+        //then compare elements from head and insert before an element greater than appears
+        
+        ListNode* small = new ListNode();
+        ListNode* large = new ListNode();
+        ListNode* smallhead=small;
+        ListNode* largehead=large;
+        
+        if(!head) return nullptr;
+        
+        while(head != nullptr){
+            
+            if(head->val < x){
+                smallhead->next=head;
+                smallhead=smallhead->next;
+                
+            }
+            else{
+                largehead->next=head;
+                largehead=largehead->next;
+
+            }
+        head=head->next;
+        }
+        
+        largehead->next=nullptr;
+        smallhead->next=large->next;
+        return small->next;
+    }
+};
