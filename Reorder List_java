@@ -1,0 +1,58 @@
+/**
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+
+Example 1:
+Input: head = [1,2,3,4]
+Output: [1,4,2,3]
+
+Constraints:
+
+The number of nodes in the list is in the range [1, 5 * 104].
+1 <= Node.val <= 1000
+**/
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public void reorderList(ListNode head) {
+        ListNode node=head;
+        int count=0;
+        HashMap<Integer, ListNode> map= new HashMap<>();
+        while(node!=null){
+            map.put(count++,node);
+            node=node.next;
+        }
+        
+        int l=0;
+        int r=count-1;
+        ListNode left=null;
+        ListNode right=null;
+        
+        while(l<r){
+            left=map.get(l);
+            right=map.get(r);
+            ListNode temp=left.next;
+            left.next=right;
+            right.next=temp;   
+            l++;
+            r--;
+        }
+        map.get(l).next=null;
+    }
+}
+
